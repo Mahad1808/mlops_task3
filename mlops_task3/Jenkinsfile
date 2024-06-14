@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Cloning from git') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Mahad1808/mlops_task3.git'
+            }
+        }
+
+        stage('Installation of dependencies') {
+            steps {
+                bat 'pip3 install -r requirement.txt'
+                echo 'Successfully installed dependencies'
+            }
+        }
+
+        stage('Testing') {
+            steps {
+                bat 'python test.py'
+                echo 'Tests cases executed with success'
+            }
+        }
+
+        stage('Deploying') {
+            steps {
+                script {
+                    if (env.BRANCH_NAME == 'main') {
+                        echo 'Deploying to production...'
+                    } else {
+                        echo 'Deploying to development server...'
+                    }
+                }
+            }
+        }
+    }
+}
