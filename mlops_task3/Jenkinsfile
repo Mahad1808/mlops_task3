@@ -15,14 +15,14 @@ pipeline {
             }
         }
 
-        stage('Testing') {
+        stage('Test') {
             steps {
                 bat 'python test.py'
                 echo 'Tests cases executed with success'
             }
         }
 
-        stage('Deploying') {
+        stage('Deploy') {
             steps {
                 script {
                     if (env.BRANCH_NAME == 'main') {
